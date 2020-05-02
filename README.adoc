@@ -1,0 +1,78 @@
+== Installing the Launcher
+
+This README will explain how to install the Launcher using the Helm Chart found in this folder.
+This Helm Chart that will create all the necessary services in OpenShift to run the application.
+
+=== Requisites
+
+Before you start any installation make sure that:
+
+- You've got https://helm.sh/docs/intro/install/[Helm] installed
+- You are logged in using `oc login`
+- You have created a project (eg. by using `oc new-project`)
+
+=== Installation
+
+To install the Launcher Chart run the following (assuming your current directory is the same as where this README lives):
+
+[source,bash]
+----
+helm install launcher ./helm/launcher --disable-openapi-validation
+----
+
+Now by default this won't actually install a fully working version of the Launcher because if you want more than the
+possibility of downloading code and you also want the Launcher to push code to Git and deploy the applications on
+OpenShift you will need to configure one of the Authentication mechanisms.
+
+=== Configuration
+
+All possible configuration options can be found here: link:stable/launcher/values.yaml[values.yaml]
+
+Single configuration values can be set by passing them on the command line, like `--set key+value`, but that soon
+becomes unwieldy so in that case it's best to create a .yaml file with al the required settings and pass them  like this:
+
+[source,bash]
+----
+-f ./my-config-values.yaml
+----
+
+=== Authentication
+
+There are 4 possible authentication methods that can be configured: KeyCloak, OAuth and direct (single-user) token or
+basic authentication. Each of those options needs different values to be set, which we'll explain below.
+
+==== KeyCloak
+
+The `auth` configuration setting must be set to `keycloak` for this. Then you need to configure the settings in the
+`keycloak` section. Take a look at the link:keycloak-openshiftio-values.yaml file to get some idea what's needed.
+
+*TBD*: Some more documentation.
+
+==== OAuth
+
+The `auth` configuration setting must be set to `oauth` for this. Then you need to configure the settings in the
+`oauth` and `gitProvider` sections. Read this https://github.com/fabric8-launcher/launcher-application/blob/master/README.md#setup-using-oauth-oauth-mode[OAuth Setup] explanation.
+You can also take a look at the contents of this file: link:local-crc-dev-values.yaml to get an idea.
+
+*TBD*: Some more documentation.
+
+==== Token or Username/Password
+
+*Warning:* _This authentication method is only for local development purposes. It can only ever handle a single a single
+user and is therefore not suited for non-local deployment._
+
+The `auth` configuration setting must be set to `direct` for this. Then you need to configure the settings in the
+`openshift` and `legacyGitProvider` sections. Read this https://github.com/fabric8-launcher/launcher-application/blob/master/README.md#setup-git-providers-default-credentials-token-mode[Token Setup]
+explanation.
+
+=== Stable Release
+
+By default the Chart will use the latest versions from master for both the Launcher application and the Welcome
+Application, if you want to use the latest stable versions instead add the following argument to the `helm install`
+command above:
+
+[source,bash]
+----
+-f ./helm/release-values.yaml
+----
+
