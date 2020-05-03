@@ -2,7 +2,7 @@ apiVersion: v2
 name: launcher
 description: A Helm chart to install the Launcher
 type: application
-version: 1.0.1
+version: 1.0.2
 appVersion: 202004301435
 home: https://developers.redhat.com/launch/
 maintainers:
