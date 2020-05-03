@@ -110,4 +110,22 @@ If you run it like this it will tell you it needs two arguments: a chart version
 what the current values for those two are. When you create a new release you must always increment the chart version
 in some way. The app version can stay the same if the Launcher itself hasn't changed.
 
+An example:
+
+[source,bash]
+----
+$ ./make-release
+Missing arguments
+Usage: make-release <new-chart-version> <new-app-version>
+Current versions:
+version: 1.0.0
+appVersion: 202004230029
+$ ./make-release 1.0.1 202004301435
+.....
+..... (some output here that shouldn't have any errors)
+.....
+If everything went okay and there are no errors you should now be in the 'gh-pages' branch.
+You can now push the changes, switch back to master and push the changes there as well.
+----
+
 
