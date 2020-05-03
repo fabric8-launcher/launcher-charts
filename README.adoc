@@ -1,7 +1,7 @@
 == Installing the Launcher
 
-This README will explain how to install the Launcher using the Helm Chart found in this folder.
-This Helm Chart that will create all the necessary services in OpenShift to run the application.
+This README will explain how to install the Launcher using a Helm Chart.
+This Helm Chart will create all the necessary services in OpenShift to run the application.
 
 === Requisites
 
@@ -13,11 +13,19 @@ Before you start any installation make sure that:
 
 === Installation
 
-To install the Launcher Chart run the following (assuming your current directory is the same as where this README lives):
+To be able to install the Launcher we first need to add the Launcher chart repository, running the following:
 
 [source,bash]
 ----
-helm install launcher ./helm/launcher --disable-openapi-validation
+helm repo add launcher https://fabric8-launcher.github.io/launcher-charts/stable
+helm repo update
+----
+
+And now we can install the Launcher Chart, run:
+
+[source,bash]
+----
+helm install my-launcher launcher/launcher --disable-openapi-validation
 ----
 
 Now by default this won't actually install a fully working version of the Launcher because if you want more than the
@@ -76,3 +84,13 @@ command above:
 -f ./helm/release-values.yaml
 ----
 
+=== For develoeprs
+
+If you want to install the very latest version of the Launcher or if you have made changes to tha chart that you want
+to test you can also install the Launcher directly from the chart directory by running the following (assuming your 
+current directory is the same as where this README lives):
+
+[source,bash]
+----
+helm install launcher ./stable/launcher --disable-openapi-validation
+----
