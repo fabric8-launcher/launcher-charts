@@ -20,7 +20,7 @@ application:
   # The Launcher image to use for the application
   image:
     name: fabric8/launcher-backend
-    tag: f99d636 # LAUNCHER - Don't edit or remove this comment!
+    tag: latest # LAUNCHER - Don't edit or remove this comment!
   # Resource limits
   # It's usually recommended not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -74,7 +74,7 @@ welcome:
   # The image to use for the Welcome app
   image:
     name: fabric8/launcher-creator-welcome-app
-    tag: 33f5f37 # WELCOME - Don't edit or remove this comment!
+    tag: latest # WELCOME - Don't edit or remove this comment!
 
 targetCluster:
   # The API URL of the K8s/OpenShift instance where the launched boosters should be created (ie. https://hostname[:port]
