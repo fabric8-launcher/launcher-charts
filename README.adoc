@@ -36,7 +36,7 @@ OpenShift you will need to configure one of the Authentication mechanisms.
 
 All possible configuration options can be found here: link:stable/launcher/values.yaml[values.yaml]
 
-Single configuration values can be set by passing them on the command line, like `--set key+value`, but that soon
+Single configuration values can be set by passing them on the command line, like `--set key=value`, but that soon
 becomes unwieldy so in that case it's best to create a .yaml file with al the required settings and pass them  like this:
 
 [source,bash]
@@ -46,13 +46,15 @@ becomes unwieldy so in that case it's best to create a .yaml file with al the re
 
 === Authentication
 
-There are 4 possible authentication methods that can be configured: KeyCloak, OAuth and direct (single-user) token or
-basic authentication. Each of those options needs different values to be set, which we'll explain below.
+There are 3 possible authentication methods that can be configured: KeyCloak, OAuth and direct (which is single-user
+and uses either token or user/password authentication). Each of those options needs different values to be set, which
+we'll explain below.
 
 ==== KeyCloak
 
 The `auth` configuration setting must be set to `keycloak` for this. Then you need to configure the settings in the
-`keycloak` section. Take a look at the link:keycloak-openshiftio-values.yaml file to get some idea what's needed.
+`keycloak` section. Take a look at the link:keycloak-openshiftio-values.yaml[keycloak-openshiftio-values.yaml] file
+to get some idea what's needed.
 
 *TBD*: Some more documentation.
 
@@ -60,7 +62,7 @@ The `auth` configuration setting must be set to `keycloak` for this. Then you ne
 
 The `auth` configuration setting must be set to `oauth` for this. Then you need to configure the settings in the
 `oauth` and `gitProvider` sections. Read this https://github.com/fabric8-launcher/launcher-application/blob/master/README.md#setup-using-oauth-oauth-mode[OAuth Setup] explanation.
-You can also take a look at the contents of this file: link:local-crc-dev-values.yaml to get an idea.
+You can also take a look at the contents of this file: link:local-crc-dev-values.yaml[local-crc-dev-values.yaml] to get an idea.
 
 *TBD*: Some more documentation.
 
@@ -73,24 +75,24 @@ The `auth` configuration setting must be set to `direct` for this. Then you need
 `openshift` and `legacyGitProvider` sections. Read this https://github.com/fabric8-launcher/launcher-application/blob/master/README.md#setup-git-providers-default-credentials-token-mode[Token Setup]
 explanation.
 
-=== Stable Release
+=== For developers
 
-By default the Chart will use the latest versions from master for both the Launcher application and the Welcome
-Application, if you want to use the latest stable versions instead add the following argument to the `helm install`
-command above:
-
-[source,bash]
-----
--f ./helm/release-values.yaml
-----
-
-=== For develoeprs
-
-If you want to install the very latest version of the Launcher or if you have made changes to tha chart that you want
-to test you can also install the Launcher directly from the chart directory by running the following (assuming your 
-current directory is the same as where this README lives):
+If you want to install the very latest version of the Launcher and the Welcome App or if you have made changes to tha
+chart that you want to test you can also install the Launcher directly from the chart directory by running the following
+(assuming your current directory is the same as where this README lives):
 
 [source,bash]
 ----
 helm install launcher ./stable/launcher --disable-openapi-validation
+----
+
+==== Stable Release
+
+As mentioned above, by default the local Chart will use the latest versions from master for both the Launcher and the
+Welcome Application, if an the other ahnd you want to use the latest stable versions instead, add the following argument
+to the `helm install` command above:
+
+[source,bash]
+----
+-f ./release-values.yaml
 ----
