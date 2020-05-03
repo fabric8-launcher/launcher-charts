@@ -76,14 +76,13 @@ welcome:
     name: fabric8/launcher-creator-welcome-app
     tag: latest # WELCOME - Don't edit or remove this comment!
 
-openshift:
-  # The base URL of the OpenShift API where the launched boosters should be created (ie. https://hostname[:port]
+targetCluster:
+  # The API URL of the K8s/OpenShift instance where the launched boosters should be created (ie. https://hostname[:port]
   # or https://ipaddress[:port]). Leave the default value when targeting the same OpenShift/Minishift you are
   # running this on. Required.
   apiUrl: https://openshift.default.svc.cluster.local
-  # The base URL of the OpenShift Console where the launched boosters should be created (ie. https://hostname[:port]
-  # or https://ipaddress[:port]). When targetting the same OpenShift/Minishift instance you are running this on you
-  # can most likely look at this page's address bar of your browser and copy the URL. Optional.
+  # The Console URL of the OpenShift instance where the launched boosters should be created (ie. https://hostname[:port]
+  # or https://ipaddress[:port]). Optional.
   consoleUrl: ""
   # Impersonate OpenShift users (requires the Launcher to run with a ServiceAccount with impersonator role).
   impersonateUser: false

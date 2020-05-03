@@ -1,4 +1,5 @@
-{{- if eq .Values.auth "oauth" -}}
+{{- $isOpenshift := .Capabilities.APIVersions.Has "oauth.openshift.io/v1" -}}
+{{- if and $isOpenshift (eq .Values.auth "oauth") -}}
 kind: OAuthClient
 apiVersion: oauth.openshift.io/v1
 metadata:
@@ -9,4 +10,7 @@ secret: launcher-oauth-client-secret
 redirectURIs:
   - {{ .Values.oauth.redirectUrl | quote }}
 grantMethod: prompt
+{{- end -}}
+{{- if and (not $isOpenshift) (eq .Values.auth "oauth") -}}
+  {{- fail "OAuth is only supported on OpenShift" -}}
 {{- end -}}
