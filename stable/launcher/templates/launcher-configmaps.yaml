@@ -22,9 +22,9 @@ data:
   launcher.creator.sentry.dsn: {{ .Values.creator.sentryDsn | quote }}
   launcher.welcome.image.name: {{ .Values.welcome.image.name | quote }}
   launcher.welcome.image.tag: {{ .Values.welcome.image.tag | quote }}
-  launcher.missioncontrol.openshift.api.url: {{ .Values.openshift.apiUrl | quote }}
-  launcher.missioncontrol.openshift.console.url: {{ .Values.openshift.consoleUrl | quote }}
-  launcher.missioncontrol.openshift.impersonate.user: {{ .Values.openshift.impersonateUser | quote }}
+  launcher.missioncontrol.openshift.api.url: {{ .Values.targetCluster.apiUrl | quote }}
+  launcher.missioncontrol.openshift.console.url: {{ .Values.targetCluster.consoleUrl | quote }}
+  launcher.missioncontrol.openshift.impersonate.user: {{ .Values.targetCluster.impersonateUser | quote }}
   launcher.missioncontrol.gitlab.url: {{ .Values.legacyGitProvider.gitlab.url | quote }}
   launcher.missioncontrol.gitea.url: {{ .Values.legacyGitProvider.gitea.url | quote }}
   {{- if eq .Values.auth "keycloak" }}

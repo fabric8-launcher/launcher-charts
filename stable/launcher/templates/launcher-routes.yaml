@@ -1,3 +1,5 @@
+{{- $isOpenshift := .Capabilities.APIVersions.Has "route.openshift.io/v1" -}}
+{{- if $isOpenshift -}}
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -14,4 +16,4 @@ spec:
     name: {{ include "launcher.fullname" . }}
     weight: 100
   wildcardPolicy: None
-
+{{- end -}}
