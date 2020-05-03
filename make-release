@@ -1,0 +1,76 @@
+#!/bin/bash
+
+if ! hash yq 2>/dev/null; then
+    echo >&2 "I require yq but it's not installed.  Aborting."
+    exit 1
+fi
+
+if [[ $# != 2 ]]; then
+    echo >&2 "Missing arguments"
+    echo >&2 "Usage: make-release <new-chart-version> <new-app-version>"
+    echo >&2 "Current versions:"
+    grep -E 'version|appVersion' stable/launcher/Chart.yaml
+    exit 1
+fi
+
+chart_version=$1
+app_version=$2
+
+if output=$(git status --porcelain) && [ -z "$output" ]; then
+    dummy=foo
+else
+    echo >&2 "Working directory not clean, commit or stash your changes first"
+    exit 1
+fi
+
+# Get current commit IDs for the Launcher and the Welcome App
+app_commit=$(curl -s https://api.github.com/repos/fabric8-launcher/launcher-application/commits/HEAD | jq -r '.sha' | cut -c1-7)
+welcome_commit=$(curl -s https://api.github.com/repos/fabric8-launcher/launcher-creator-welcome-app/commits/HEAD | jq -r '.sha' | cut -c1-7)
+
+# Re-create the release-values.yaml with the new commit IDs
+echo -e "application:\n  image:\n    tag: $app_commit" > release-values.yaml
+echo -e "welcome:\n  image:\n    tag: $welcome_commit" >> release-values.yaml
+
+# Make backup of the Launcher's yaml file
+cp -a stable/launcher/values.yaml stable/launcher/values.yaml.bak
+
+# Update the Launcher's value.yaml with the new commit IDs
+sed -Ei "s/tag:\s+.*\s+#\s+LAUNCHER/tag: $app_commit # LAUNCHER/g" stable/launcher/values.yaml
+sed -Ei "s/tag:\s+.*\s+#\s+WELCOME/tag: $welcome_commit # WELCOME/g" stable/launcher/values.yaml
+
+# Update the Launcher's Chart.yaml with the new commit IDs
+sed -Ei "s/^version:\s+.*$/version: $chart_version/g" stable/launcher/Chart.yaml
+sed -Ei "s/^appVersion:\s+.*$/appVersion: $app_version/g" stable/launcher/Chart.yaml
+
+# Package the chart
+helm package stable/launcher
+
+# Commit the yaml files and place tag
+git add release-values.yaml stable/launcher/Chart.yaml stable/launcher/values.yaml
+git commit -m "Chart updated to version $chart_version"
+git tag $chart_version
+
+# Restore the Launcher's yaml file
+mv stable/launcher/values.yaml.bak stable/launcher/values.yaml
+
+# Commit the yaml file
+git add stable/launcher/values.yaml
+git commit -m "Restored chart for further development"
+
+# Switch to gh-pages branch
+git checkout gh-pages
+
+# Move package to its proper place
+mv launcher-$chart_version.tgz stable/
+
+# Run the Helm repo indexer
+helm repo index stable
+
+# Commit package and index
+git add stable/index.yaml stable/launcher-$chart_version.tgz
+git commit -m "Added packaged chart for version $chart_version"
+
+# Tell user what to do next
+echo ""
+echo "If everything went okay and there are no errors you should now be in the 'gh-pages' branch."
+echo "You can now push the changes, switch back to master and push the changes there as well."
