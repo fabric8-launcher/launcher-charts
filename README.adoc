@@ -11,6 +11,12 @@ Before you start any installation make sure that:
 - You are logged in using `oc login`
 - You have created a project (eg. by using `oc new-project`)
 
+And when using OAuth the user that does the installation will also need cluster admin rights:
+
+```bash
+$ oc adm policy --as system:admin add-cluster-role-to-user cluster-admin <user>
+```
+
 === Installation
 
 To be able to install the Launcher we first need to add the Launcher chart repository, running the following:
