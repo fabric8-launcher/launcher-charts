@@ -2,8 +2,24 @@ apiVersion: v1
 entries:
   launcher:
   - apiVersion: v2
+    appVersion: "202007211701"
+    created: "2020-07-21T17:26:18.186042194+02:00"
+    description: A Helm chart to install the Launcher
+    digest: 8e5432e1483f7af3f176626ce7c4a2c31b27edef217bdf9a4c138e4e79be73ee
+    home: https://developers.redhat.com/launch/
+    maintainers:
+    - email: tschotan@redhat.com
+      name: Tako Schotanus
+    name: launcher
+    sources:
+    - https://github.com/fabric8-launcher/launcher-application
+    type: application
+    urls:
+    - launcher-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     appVersion: "202004301435"
-    created: "2020-05-03T19:33:36.46332863+02:00"
+    created: "2020-07-21T17:26:18.182568277+02:00"
     description: A Helm chart to install the Launcher
     digest: 47cc822933b832a95ef3b1bb80a1a35fb1f8b4ad8d97f8693cc54ce33d34abe8
     home: https://developers.redhat.com/launch/
@@ -19,7 +35,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: "202004301435"
-    created: "2020-05-03T19:33:36.462170576+02:00"
+    created: "2020-07-21T17:26:18.180728481+02:00"
     description: A Helm chart to install the Launcher
     digest: 3ff98dabc3baf32ed1e7e7b2980ad6de11ffef89c480033649519ad8197b9f80
     home: https://developers.redhat.com/launch/
@@ -33,4 +49,4 @@ entries:
     urls:
     - launcher-1.0.1.tgz
     version: 1.0.1
-generated: "2020-05-03T19:33:36.460698979+02:00"
+generated: "2020-07-21T17:26:18.17888885+02:00"
