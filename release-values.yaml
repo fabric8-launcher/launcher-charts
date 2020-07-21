@@ -1,6 +1,6 @@
 application:
   image:
-    tag: f99d636
+    tag: 3aa064b
 welcome:
   image:
     tag: 33f5f37
